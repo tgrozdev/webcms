@@ -1,0 +1,11 @@
+@charset "utf-8";
+p.warning {
+    padding: 20px 20px 20px 20px;
+    background-color: bisque;
+    color:brown;
+}
+p.notify {
+    padding: 20px 20px 20px 20px;
+    background-color: bisque;
+    color:green;
+}
