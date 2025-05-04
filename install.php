@@ -245,7 +245,7 @@ function Verify() //verify if the requested fields is filled
                 //опа, нещо гръмна и не се вързахме.
                 echo '<p style="color:red;">'.$lang[$language]["mysql_cannot_connect"].' '.$sql->error.'</p>';
             }
-            if ($this->dblink->connect_errno) {
+            if ($sql->connect_errno) {
                 echo '<p style="color:red;">'.$lang[$language]["mysql_cannot_connect"].' '.$sql->error.'</p><br />';
 			} else {
 					print("<h1>".$lang[$language]["installer_step2"]."</h1>");
