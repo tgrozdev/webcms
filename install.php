@@ -337,20 +337,22 @@ $this->config=array(
                     );
                     if($language == 'en'){
                         $sql->execute_query("INSERT INTO `web_mainmenu` (`id`,`type`,`text`,`title`,`url`,`priority`,`page_id`) VALUES
-                            (1, 'admin', 'SETTINGS', 'WEBSITE SETTINGS', '/admin.php?page=settings&section=main', 100, 0),
-                            (2, 'admin', 'MENU', 'MENU ADMINISTRATION (MAIN, QUICK, FOOTER)', '/admin.php?page=menu&section=main', 200, 0),
-                            (3, 'admin', 'PAGES', 'WEB PAGES ADMINISTRATION', '/admin.php?page=content&section=main', 300, 0),
-                            (4, 'admin', 'NEWS', 'NEWS ADMINISTRATION', '/admin.php?module=news&section=main', 400, 0),
-                            (5, 'admin', 'BLOG', 'BLOG ADMINISTRATION', '/admin.php?module=blog&section=main', 500, 0)",                            
+                            (1, 'admin', 'HOME', 'Admin Home', '/admin.php', 100, 0),
+                            (2, 'admin', 'SETTINGS', 'WEBSITE SETTINGS', '/admin.php?page=settings&section=main', 200, 0),
+                            (3, 'admin', 'MENU', 'MENU ADMINISTRATION (MAIN, QUICK, FOOTER)', '/admin.php?page=menu&section=main', 300, 0),
+                            (4, 'admin', 'PAGES', 'WEB PAGES ADMINISTRATION', '/admin.php?page=content&section=main', 400, 0),
+                            (5, 'admin', 'NEWS', 'NEWS ADMINISTRATION', '/admin.php?module=news&section=main', 500, 0),
+                            (6, 'admin', 'BLOG', 'BLOG ADMINISTRATION', '/admin.php?module=blog&section=main', 600, 0)",                            
                             []
                         );
                     } else {
                         $sql->execute_query("INSERT INTO `web_mainmenu` (`id`,`type`,`text`,`title`,`url`,`priority`,`page_id`) VALUES
-                            (1, 'admin', 'Настройки', 'Настройки на сайта', '/admin.php?page=settings&section=main', 100, 0),
-                            (2, 'admin', 'Меню', 'Администратор на Менюта', '/admin.php?page=menu&section=main', 200, 0),
-                            (3, 'admin', 'Страници', 'Администратор на Страниците', '/admin.php?page=content&section=main', 300, 0),
-                            (4, 'admin', 'Новини', 'Администратор на Новините', '/admin.php?module=news&section=main', 400, 0),
-                            (5, 'admin', 'Блог', 'Администратор на Блога', '/admin.php?module=blog&section=main', 500, 0)",                      
+                            (1, 'admin', 'Начало', 'Админ начало', '/admin.php', 100, 0),
+                            (2, 'admin', 'Настройки', 'Админ настройки', '/admin.php?page=settings&section=main', 200, 0),
+                            (3, 'admin', 'Меню', 'Админ меню', '/admin.php?page=menu&section=main', 300, 0),
+                            (4, 'admin', 'Страници', 'Админ страници', '/admin.php?page=content&section=main', 400, 0),
+                            (5, 'admin', 'Новини', 'Админ новини', '/admin.php?module=news&section=main', 500, 0),
+                            (6, 'admin', 'Блог', 'Админ блог', '/admin.php?module=blog&section=main', 600, 0)",                      
                             []
                         );
                     }    
