@@ -407,7 +407,9 @@ $this->config=array(
 
                     
                     $sql->execute_query("INSERT INTO `web_pages` (`id`,`url`,`title`,`content`,`author`,`custom`,`parameters`,`source`,`moved`) VALUES
-                    (?,?,?,?,?,?,?,?,?),(?,?,?,?,?,?,?,?,?),(?,?,?,?,?,?,?,?,?)",[$pages["index.html"],$pages["contacts.html"],$pages["sitemap.html"]]);
+                    (?,?,?,?,?,?,?,?,?),
+                    (?,?,?,?,?,?,?,?,?),
+                    (?,?,?,?,?,?,?,?,?)",[array_values($pages["index.html"]),array_values($pages["contacts.html"]),array_values($pages["sitemap.html"])]);
 
 
                     $sql->execute_query("CREATE TABLE `web_news` (
