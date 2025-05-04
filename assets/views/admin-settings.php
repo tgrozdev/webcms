@@ -17,6 +17,10 @@ $lang["bg"]=[
 	"changetemplate_success"=>"Шаблона на сайта беше променен успешно!",
 	"changepassword_error"=>"Грешка: Паролите не съвпадат!",
 	"settings"=>"Настройки",
+	"changesettings_input_name"=>"Име на сайта",
+	"changesettings_input_slogan"=>"Слоган на сайта",
+	"changesettings_input_url"=>"URL на сайта",
+	"changesettings_input_author"=>"Автор на сайта",
 ];
 $lang["en"]=[
 	"changeusername"=>"Change Administrator Username",
@@ -36,17 +40,23 @@ $lang["en"]=[
 	"changetemplate_success"=>"Website Template Changed!",
 	"changepassword_error"=>"ERROR: Passwords DO NOT Match! ",
 	"settings"=>"CMS Settings",
-];
+	"changesettings_input_name"=>"Website Title/Name",
+	"changesettings_input_slogan"=>"Website Slogan",
+	"changesettings_input_url"=>"URL www or non-www",
+	"changesettings_input_author"=>"Website Author"];
+
 
 $content = "";
 $section = $this->GetVar("section");
 switch ($section) {
 
 	case "changeusername": {
-			$this->Query("UPDATE `web_settings` SET `value`=? WHERE `key`=? limit 1;", [$_POST["user"], "admin_username"]);
-			$content .= "<p class=\"notify\">".$lang[$this->config["lang"]]["changeusername_success"]."</p><br>";
-			unset($_COOKIE["loggedin"]);
-			$this->GenerateLogin();
+		$params=explode(":",$_COOKIE["admin_loggedin"]);
+		$this->Query("UPDATE `web_users` SET `username`=? WHERE `username`=? limit 1;", [$_POST["user"], $params[0]]);
+		$content .= "<p class=\"notify\">".$lang[$this->config["lang"]]["changeusername_success"]."</p><br>";
+		unset($_COOKIE["admin_loggedin"]);
+		$this->GenerateLogin();
+		break;
 		}
 
 	case "changesettings": {
@@ -58,9 +68,10 @@ switch ($section) {
 
 	case "changepassword": {
 			if (isset($_POST["new1_password"]) && !empty($_POST["new1_password"]) && ($_POST["new1_password"] == $_POST["new2_password"])) {
-				$this->Query("UPDATE `web_settings` SET `value`=MD5(?) WHERE `key`=? limit 1;", [$_POST["new1_password"], "admin_password"]);
+				$params=explode(":",$_COOKIE["admin_loggedin"]);
+				$this->Query("UPDATE `web_users` SET `password`=MD5(?) WHERE `username`=? limit 1;", [$_POST["new1_password"], $params[0]]);
 				$content .= "<p class=\"notify\">".$lang[$this->config["lang"]]["changepassword_success"]."</p><br>";
-				unset($_COOKIE["loggedin"]);
+				unset($_COOKIE["admin_loggedin"]);
 				$this->GenerateLogin();
 			} else {
 				$content.="<p class=\"warning\">".$lang[$this->config["lang"]]["changepassword_error"]."</p>";
@@ -77,10 +88,10 @@ switch ($section) {
 	default: {
 			$content .= '<form name="changesettings" action="admin.php?page=settings&section=changesettings" method="post">
 <h2>'.$lang[$this->config["lang"]]["changesettings"].'</h2><br>
-Website Title/Name: <input type="text" name="name" size="50" maxlength="50" value="' . $this->config["name"] . '" required><br><br>
-Website Slogan: <input type="text" name="slogan" size="50" maxlength="50" value="' . $this->config["slogan"] . '" required><br><br>
-URL www or non-www: <input type="text" name="url" size="30" maxlength="50" value="' . $this->config["url"] . '" required><br><br>
-Website Author: <input type="text" name="author" size="20" maxlength="50" value="' . $this->config["author"] . '" required><br><br>
+'.$lang[$this->config["lang"]]["changesettings_input_name"].' <input type="text" name="name" size="50" maxlength="50" value="' . $this->config["name"] . '" required><br><br>
+'.$lang[$this->config["lang"]]["changesettings_input_slogan"].' <input type="text" name="slogan" size="50" maxlength="50" value="' . $this->config["slogan"] . '" required><br><br>
+'.$lang[$this->config["lang"]]["changesettings_input_url"].' <input type="text" name="url" size="30" maxlength="50" value="' . $this->config["url"] . '" required><br><br>
+'.$lang[$this->config["lang"]]["changesettings_input_author"].' <input type="text" name="author" size="20" maxlength="50" value="' . $this->config["author"] . '" required><br><br>
 <input type="hidden" name="page" value="settings">
 <input type="hidden" name="section" value="changesettings">
 <input type="submit" value="'.$lang[$this->config["lang"]]["changesettings_update"].'">
