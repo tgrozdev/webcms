@@ -370,46 +370,31 @@ $this->config=array(
 
                     $pages = [];
                     $pages["index.html"]=[
-                        "id"=> 1,
-                        "url"=> "index.html",
-                        "title"=> $language=="en" ? "Home Page" : "Начална страница",
-                        "content"=> $language=="en" ? "<h1>Home Page</h1><p>This is the home page of the website.</p>" : "<h1>Начална страница</h1><p>Това е началната страница на сайта.</p>",
-                        "author"=>"Auto Generated",
-                        "custom"=> 0,
-                        "parameters"=> '',
-                        "source"=> '',
-                        "moved" => NULL
+                        1,"index.html",
+                        $language=="en" ? "Home Page" : "Начална страница",
+                        $language=="en" ? "<h1>Home Page</h1><p>This is the home page of the website.</p>" : "<h1>Начална страница</h1><p>Това е началната страница на сайта.</p>",
+                        "Auto Generated",0,'','',NULL
                     ];
 
                     $pages["contacts.html"]=[
-                        "id"=> 2,
-                        "url"=> "contacts.html",
-                        "title"=> $language=="en" ? "Contact Us" : "Свържете се с нас",
-                        "content"=> $language=="en" ? "<h1>Contact Us</h1>\r\n<ul><li>Name: </li><li>Phone: </li><li>Email: </li></ul>" : "<h1>Свържете се с нас</h1>\r\n<ul><li>Име: </li><li>Телефон: </li><li>Имейл: </li></ul>",
-                        "author"=>"Auto Generated",
-                        "custom"=> 0,
-                        "parameters"=> '',
-                        "source"=> '',
-                        "moved" => NULL
+                        2,"contacts.html",
+                        $language=="en" ? "Contact Us" : "Свържете се с нас",
+                        $language=="en" ? "<h1>Contact Us</h1>\r\n<ul><li>Name: </li><li>Phone: </li><li>Email: </li></ul>" : "<h1>Свържете се с нас</h1>\r\n<ul><li>Име: </li><li>Телефон: </li><li>Имейл: </li></ul>",
+                        "Auto Generated",0,'','',NULL
                     ];
 
                     $pages["sitemap.html"]=[
-                        "id"=> 3,
-                        "url"=> "sitemap.html",
-                        "title"=> $language=="en" ? "Website Sitemap" : "Карта на сайта",
-                        "content"=> $language=="en" ? "<h1>Sitemap</h1><p>This is the sitemap of the website.</p>" : "<h1>Карта на сайта</h1><p>Това е карта на сайта.</p>",
-                        "author"=>"Auto Generated",
-                        "custom"=> 1,
-                        "parameters"=> '',
-                        "source"=> 'sitemap.php',
-                        "moved" => NULL
+                        3,"sitemap.html",
+                        $language=="en" ? "Website Sitemap" : "Карта на сайта",
+                        $language=="en" ? "<h1>Sitemap</h1><p>This is the sitemap of the website.</p>" : "<h1>Карта на сайта</h1><p>Това е карта на сайта.</p>",
+                        "Auto Generated",1,'','sitemap.php',NULL
                     ];
 
                     
                     $sql->execute_query("INSERT INTO `web_pages` (`id`,`url`,`title`,`content`,`author`,`custom`,`parameters`,`source`,`moved`) VALUES
                     (?,?,?,?,?,?,?,?,?),
                     (?,?,?,?,?,?,?,?,?),
-                    (?,?,?,?,?,?,?,?,?)",[array_values($pages["index.html"],$pages["contacts.html"],$pages["sitemap.html"])]);
+                    (?,?,?,?,?,?,?,?,?)",array_merge($pages["index.html"],$pages["contacts.html"],$pages["sitemap.html"]));
 
 
                     $sql->execute_query("CREATE TABLE `web_news` (
