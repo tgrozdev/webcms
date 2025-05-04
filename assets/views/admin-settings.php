@@ -81,8 +81,9 @@ Website Title/Name: <input type="text" name="name" size="50" maxlength="50" valu
 Website Slogan: <input type="text" name="slogan" size="50" maxlength="50" value="' . $this->config["slogan"] . '" required><br><br>
 URL www or non-www: <input type="text" name="url" size="30" maxlength="50" value="' . $this->config["url"] . '" required><br><br>
 Website Author: <input type="text" name="author" size="20" maxlength="50" value="' . $this->config["author"] . '" required><br><br>
-<input type="hidden" name="page" value="settings"><input type="hidden" name="section" value="changesettings">
-<input type="submit" value="'.$lang[$lang[$this->config["lang"]]["changesettings_update"]].'">
+<input type="hidden" name="page" value="settings">
+<input type="hidden" name="section" value="changesettings">
+<input type="submit" value="'.$lang[$this->config["lang"]]["changesettings_update"].'">
 </form>';
 			$content .= '<hr/><form name="changesettings" action="admin.php?page=settings&section=changesettings" method="post">
 <h2>'.$lang[$this->config["lang"]]["changetemplate"].'</h2><br>
