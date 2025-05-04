@@ -311,7 +311,7 @@ $this->config=array(
                      PRIMARY KEY  (`id`)
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");                        
                     $sql->execute_query("INSERT INTO `web_users` (`admin`,`username`,`password`,`email`,`first_name`,`last_name`,`enabled`) VALUES
-                    (1,?,?,?,?,?,1);",
+                    (1,?,MD5(?),?,?,?,1);",
                         [
                             $_POST["admin_username"],
                             $_POST["admin_password"],
