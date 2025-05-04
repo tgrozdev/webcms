@@ -308,8 +308,7 @@ $this->config=array(
                     `newsaccess` tinyint(1) DEFAULT '0',
                     `diraccess` tinyint(1) DEFAULT '1',
                     `enabled` tinyint(1) DEFAULT '0'
-                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-                    )");                        
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");                        
                     $sql->execute_query("INSERT INTO `web_users` (`admin`,`username`,`password`,`email`,`first_name`,`last_name`,`enabled`) VALUES
                     (1,?,?,?,?,?,1);",
                         [
