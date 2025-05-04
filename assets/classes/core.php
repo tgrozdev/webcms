@@ -45,7 +45,12 @@ class Core{
 			case $result===false : {
 				die("ERROR ".$this->dblink->error."In Query: ".$query." Params: ".json_encode($params));
 				return false;
-			}	
+			}
+			case $result->num_rows==0 : {				
+				mysqli_free_result($result);
+				return [];
+				break;
+			}
 			// array за select
 			default : {
 				$array=$result->fetch_all(MYSQLI_ASSOC);

@@ -252,6 +252,7 @@ function Verify() //verify if the requested fields is filled
 					
 					$config='?php
 $this->config=array(
+"lang"=>"'.$language.'", // Language for site
 "mysql_host"=>"'.$_POST["sql_server"].'", // Please enter MYSQL Host Server
 "mysql_username"=>"'.$_POST["sql_user"].'", // Please enter MYSQL account Username
 "mysql_password"=>"'.$_POST["sql_password"].'", // Please enter MYSQL account Password
@@ -273,8 +274,8 @@ $this->config=array(
                         `value` varchar(100) NOT NULL default '',
                         PRIMARY KEY  (`key`))
                         ENGINE=InnoDB
-                        DEFAULT CHARSET=4
-                        COMMENT='PLEASE DO NOT EDIT IF YOU DONT KNOW WHAT YOU ARE DOING!';",[]
+                        DEFAULT CHARSET=utf8mb4;",
+                        []
                     );
 					
 					$sql->execute_query("INSERT INTO `web_settings` (`key`,`value`) VALUES
