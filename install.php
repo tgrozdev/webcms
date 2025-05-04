@@ -255,7 +255,7 @@ $this->config=array(
 "mysql_host"=>"'.$_POST["sql_server"].'", // Please enter MYSQL Host Server
 "mysql_username"=>"'.$_POST["sql_user"].'", // Please enter MYSQL account Username
 "mysql_password"=>"'.$_POST["sql_password"].'", // Please enter MYSQL account Password
-"mysql_db"=>"'.$_POST["sql_database"].' // Please enter MYSQL database name which will be used for this website
+"mysql_db"=>"'.$_POST["sql_database"].'" // Please enter MYSQL database name which will be used for this website
 );
 ?';
 					
@@ -273,7 +273,7 @@ $this->config=array(
                         `value` varchar(100) NOT NULL default '',
                         PRIMARY KEY  (`key`))
                         ENGINE=InnoDB
-                        DEFAULT CHARSET=utf8mb3
+                        DEFAULT CHARSET=4
                         COMMENT='PLEASE DO NOT EDIT IF YOU DONT KNOW WHAT YOU ARE DOING!';",[]
                     );
 					
@@ -308,7 +308,7 @@ $this->config=array(
                     `newsaccess` tinyint(1) DEFAULT '0',
                     `diraccess` tinyint(1) DEFAULT '1',
                     `enabled` tinyint(1) DEFAULT '0'
-                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
                     )");                        
                     $sql->execute_query("INSERT INTO `web_users` (`admin`,`username`,`password`,`email`,`first_name`,`last_name`,`enabled`) VALUES
                     (1,?,?,?,?,?,1);",
@@ -331,7 +331,7 @@ $this->config=array(
                         `page_id` int(11) default '0', 
                         PRIMARY KEY  (`id`))
                         ENGINE=InnoDB
-                        DEFAULT CHARSET=utf8mb3;",
+                        DEFAULT CHARSET=utf8mb4;",
                         []
                     );
                     if($language == 'en'){
@@ -364,7 +364,7 @@ $this->config=array(
                         `moved` varchar(250) default NULL,
                         PRIMARY KEY  (`id`))
                         ENGINE=InnoDB 
-                        DEFAULT CHARSET=utf8mb3;",
+                        DEFAULT CHARSET=utf8mb4;",
                         []
                     );					
 
@@ -407,9 +407,9 @@ $this->config=array(
                     `comments` tinyint(1) default '0',
                     `frontpage` tinyint(1) default '1',
                     PRIMARY KEY  (`id`),
-                    FULLTEXT KEY `title` (`title`,`content_short`))
+                    FULLTEXT KEY `title` (`title`,`content`))
                     ENGINE=InnoDB
-                    DEFAULT CHARSET=utf8mb3;",
+                    DEFAULT CHARSET=utf8mb4;",
                     []);
 
                     $sql->execute_query("CREATE TABLE `web_blog` (
@@ -424,7 +424,7 @@ $this->config=array(
                     `frontpage` tinyint(1) default '1',
                     PRIMARY KEY  (`id`))
                     ENGINE=InnoDB 
-                    DEFAULT CHARSET=utf8mb3;",
+                    DEFAULT CHARSET=utf8mb4;",
                     []);					
 
 					print("<p>".$lang[$language]["installer_step2_success"]."</p>");										
@@ -441,7 +441,7 @@ $this->config=array(
                     <br />Administrator Password: $admin_password
                     <br /><br />If you have any problems please contact our custommer support at support@seowebsitecms.com<br />";
 					$subject = "Website CMS was successfully installed on $website_url";
-                    print("<br /><h1>Website CMS installed Successfully!</h1><p>You can now login to the site administration panel and start adding content here: <a href=\"http://$website_url/admin.php\">$website_url/admin.php</a> with the admin login you provided on the previous page</p>");
+                    print("<br /><h1>Website CMS installed Successfully!</h1><p>You can now login to the site administration panel and start adding content here: <a href=\"$website_url/admin.php\">$website_url/admin.php</a> with the admin login you provided on the previous page</p>");
 					print("<p>Thank you for chosing Website CMS</p>");
 
                     } else {
@@ -451,7 +451,7 @@ $this->config=array(
                         <br />Администраторски парола: $admin_password
                         <br /><br />Ако имате някакви проблеми, моля свържете се с нашият техническа поддръжка на support@seowebsitecms.com<br />";
                         $subject = "Уеб CMS беше успешно инсталиран на $website_url";
-                        print("<br /><h1>Уеб CMS беше успешно инсталиран на $website_url</h1><p>Можете сега да влезете в администраторския панел и да започнете да добавяте съдържание тук: <a href=\"http://$website_url/admin.php\">$website_url/admin.php</a> с администраторските данни, които сте предоставили на предишната страница</p>");
+                        print("<br /><h1>Уеб CMS беше успешно инсталиран на $website_url</h1><p>Можете сега да влезете в администраторския панел и да започнете да добавяте съдържание тук: <a href=\"$website_url/admin.php\">$website_url/admin.php</a> с администраторските данни, които сте предоставили на предишната страница</p>");
                         print("<p>Благодарим ви че избрахте Уеб CMS</p>");
                     }
                     $to  = $admin_email;
