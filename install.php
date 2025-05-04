@@ -252,10 +252,10 @@ function Verify() //verify if the requested fields is filled
 					
 					$config='?php
 $this->config=array(
-"mysql_host"=>"'.$sql_server.'", // Please enter MYSQL Host Server
-"mysql_username"=>"'.$sql_user.'", // Please enter MYSQL account Username
-"mysql_password"]=>"'.$sql_password.'", // Please enter MYSQL account Password
-"mysql_db"="'.$sql_database.' // Please enter MYSQL database name which will be used for this website
+"mysql_host"=>"'.$_POST["sql_server"].'", // Please enter MYSQL Host Server
+"mysql_username"=>"'.$_POST["sql_user"].'", // Please enter MYSQL account Username
+"mysql_password"=>"'.$_POST["sql_password"].'", // Please enter MYSQL account Password
+"mysql_db"=>"'.$_POST["sql_database"].' // Please enter MYSQL database name which will be used for this website
 );
 ?';
 					
