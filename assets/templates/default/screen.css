@@ -9,3 +9,6 @@ p.notify {
     background-color: bisque;
     color:green;
 }
+img {
+    max-width: 400px;
+}

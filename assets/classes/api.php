@@ -27,7 +27,6 @@ class API extends Core{
 			$this->config[$row["key"]]=$row["value"];
 		}
         */
-		$this->config["rootdir"]=getcwd()."/";
 
         $this->response = new Result();
         $this->Loader();
@@ -42,20 +41,6 @@ class API extends Core{
     function Loader(){
         $action = $this->GetVar("action");
         switch($action){
-            case "getmainmenu" : {
-                //print menu items
-                $this->response->ok=true;
-                $this->response->data=$this->Query("SELECT * FROM `web_mainmenu` WHERE `type`=? ORDER BY `priority` ASC",["main"]);
-                $this->ReturnResponse();
-                break;
-            }
-            case "getnews" : {
-                //print menu items
-                $this->response->ok=true;
-                $this->response->data=$this->Query("SELECT * FROM `web_news` ORDER BY `date` DESC LIMIT 10");
-                $this->ReturnResponse();
-                break;
-            }
             case "getconfig" : {
                 //config
                 $this->response->ok=true;
@@ -63,6 +48,34 @@ class API extends Core{
                 $this->ReturnResponse();
                 break;
             }
+            case "getmainmenu" : {
+                //print menu items
+                $this->response->ok=true;
+                $this->response->data=$this->Query("SELECT * FROM `web_menu` WHERE `type`=? ORDER BY `priority` ASC",["main"]);
+                $this->ReturnResponse();
+                break;
+            }
+            case "getpages" : {
+                //print menu items
+                $this->response->ok=true;
+                $this->response->data=$this->Query("SELECT * FROM `web_pages` WHERE `type`='page' AND `moved` IS NULL ORDER BY `date` DESC");
+                $this->ReturnResponse();
+                break;
+            }
+            case "getnews" : {
+                //print menu items
+                $this->response->ok=true;
+                $this->response->data=$this->Query("SELECT * FROM `web_pages` WHERE `type`='news' AND `moved` IS NULL ORDER BY `date` DESC");
+                $this->ReturnResponse();
+                break;
+            }
+            case "getblogs" : {
+                //print menu items
+                $this->response->ok=true;
+                $this->response->data=$this->Query("SELECT * FROM `web_pages` WHERE `type`='blog' AND `moved` IS NULL ORDER BY `date` DESC");
+                $this->ReturnResponse();
+                break;
+            }            
             default : {
                 $this->response->error="UNKNOWN PAGE";
                 $this->response->debug="POST::".implode("!!!",$_POST)."!!!GET::".implode("!!!",$_GET);

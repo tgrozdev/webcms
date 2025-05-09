@@ -1,0 +1,79 @@
+<form name="changeinfo" action="admin.php" method="post">        
+    <div class="row">
+        <div class="col-12 col-md-12">
+            <h2>Add New User</h2>
+            [{MESSAGE}]            
+        </div>
+        <div class="col-4 col-md-3">
+            <div class="form-floating">
+                <select class="form-control" id="type" name="type" required>
+                    <option value="admin" selected="selected">Admin</option>
+                    <option value="user">User</option>
+                </select>
+                <label id="type_label" for="type">USER TYPE</label>
+            </div>
+        </div>      
+        <div class="col-4 col-md-3">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="user" name="user" size="20" maxlength="20" value="" required>
+                <label id="user_label" for="user">Username</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-6 col-md-3">
+            <div class="form-floating">
+                <input class="form-control" type="password" id="new1_password" name="new1_password" size="20" maxlength="40" required>
+                <label id="new1_password_label" for="new1_password">New Password</label>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="form-floating">
+                <input class="form-control" type="password" id="new2_password" name="new2_password" size="20" maxlength="40" required>
+                <label id="new2_password_label" for="new2_password">Confirm New Password</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-6 col-md-3">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="first_name" name="first_name" size="20" maxlength="20" value="" required>
+                <label id="first_name" for="first_name">First Name</label>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="last_name" name="last_name" size="20" maxlength="20" value="" required>
+                <label id="last_name" for="last_name">Last Name</label>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="email" name="email" size="20" maxlength="80" value="" required>
+                <label id="email" for="email">Email</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-6 col-md-3">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="homepage" name="homepage" size="20" maxlength="80" value="">
+                <label id="homepage" for="homepage">Website</label>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="job_industry" name="job_industry" size="20" maxlength="50" value="">
+                <label id="job_industry" for="job_industry">Job/Industry</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12 col-md-12">
+            <input type="hidden" name="id" value="[{ID}]">
+            <input type="hidden" name="page" value="users">
+            <input type="hidden" name="section" value="createuser">
+            <input type="submit" value="Create User">
+        </div>
+    </div>
+</form>

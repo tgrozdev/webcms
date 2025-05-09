@@ -35,6 +35,8 @@ $lang["bg"]=[
     "config_admin_username" => "Админ Потребител",
     "config_admin_password" => "Админ Парола",
     "config_admin_email" => "Админ Контакт Емайл",
+    "config_admin_first_name" => "Вашето Име",
+    "config_admin_last_name" => "Вашата Фамилия",
     "install_label2" => "Продължете Инсталацията към Стъпка 2",
     "installer_step2_success"=>"Настройки на Сайта бяха успешно записани в Базата с Данни!",    
     "mysql_cannot_connect"=>"Не успяхме да се свържем към БД Сървъра! Грешка",
@@ -76,6 +78,8 @@ $lang["en"]=[
     "config_admin_username" => "Admin Username",
     "config_admin_password" => "Admin Password",
     "config_admin_email" => "Admin Contact Email",
+    "config_admin_first_name" => "Your First Name",
+    "config_admin_last_name" => "Your Last Name",
     "install_label2" => "Continue Installation to Step 2",    
     "installer_step2_success"=>"Website Settings were successfully populated in Database!",    
     "mysql_cannot_connect"=>"Cannot connect to the database server because",
@@ -192,31 +196,33 @@ function Verify() //verify if the requested fields is filled
         <div class="col-12 col-md-6">
         <form name="step1" action="install.php" method="post" onSubmit="return Verify()">
             <h2><?php echo $lang[$language]["mysql_label1"]; ?></h2>
-            <?php echo $lang[$language]["config_db_server"]; ?>: <input id="sql_server" type="text" name="sql_server" value="<?php if(!empty($sql_server)) print($sql_server); else print("localhost"); ?>" /><br />
-            <?php echo $lang[$language]["config_db_username"]; ?>: <input id="sql_user" type="text" name="sql_user" value="<?php if(!empty($sql_user)) print($sql_user); ?>" /><br />
-            <?php echo $lang[$language]["config_db_password"]; ?>: <input id="sql_password" type="text" name="sql_password" value="<?php if(!empty($sql_password)) print($sql_password); ?>" /><br />
-            <?php echo $lang[$language]["config_db_name"]; ?>: <input id="sql_database" type="text" name="sql_database" value="<?php if(!empty($sql_database)) print($sql_database); ?>"/><br />
+            <?php echo $lang[$language]["config_db_server"]; ?>: <input required id="sql_server" type="text" name="sql_server" value="<?php if(!empty($sql_server)) print($sql_server); else print("localhost"); ?>" /><br />
+            <?php echo $lang[$language]["config_db_username"]; ?>: <input required id="sql_user" type="text" name="sql_user" value="<?php if(!empty($sql_user)) print($sql_user); ?>" /><br />
+            <?php echo $lang[$language]["config_db_password"]; ?>: <input required id="sql_password" type="text" name="sql_password" value="<?php if(!empty($sql_password)) print($sql_password); ?>" /><br />
+            <?php echo $lang[$language]["config_db_name"]; ?>: <input required id="sql_database" type="text" name="sql_database" value="<?php if(!empty($sql_database)) print($sql_database); ?>"/><br />
             <hr />
             <h2><?php echo $lang[$language]["config_label1"]; ?></h2>
-            <?php echo $lang[$language]["config_url"]; ?>: <input id="website_url" type="text" name="website_url" value="<?php print($_SERVER["HTTP_HOST"]); ?>" /><br />
-            <?php echo $lang[$language]["config_title"]; ?>: <input id="website_name" type="text" name="website_name" value="<?php if(!empty($website_name)) print($website_name); ?>" /><br />
-            <?php echo $lang[$language]["config_slogan"]; ?>: <input id="website_slogan" type="text" name="website_slogan" value="<?php if(!empty($website_slogan)) print($website_slogan); ?>" /><br />
-            <?php echo $lang[$language]["config_author"]; ?>: <input id="website_author" type="text" name="website_author" value="<?php if(!empty($website_author)) print($website_author); ?>" /><br />
-            <?php echo $lang[$language]["config_copyrights"]; ?>: <input id="website_copyrights" type="text" name="website_copyrights" value="<?php if(!empty($website_copyrights)) print($website_copyrights); ?>" /><br /><br />
-            <?php echo $lang[$language]["config_template"]; ?>: <select name="website_template">
+            <?php echo $lang[$language]["config_url"]; ?>: <input required id="website_url" type="text" name="website_url" value="<?php print($_SERVER["HTTP_HOST"]); ?>" /><br />
+            <?php echo $lang[$language]["config_title"]; ?>: <input required id="website_name" type="text" name="website_name" value="<?php if(!empty($website_name)) print($website_name); ?>" /><br />
+            <?php echo $lang[$language]["config_slogan"]; ?>: <input required id="website_slogan" type="text" name="website_slogan" value="<?php if(!empty($website_slogan)) print($website_slogan); ?>" /><br />
+            <?php echo $lang[$language]["config_author"]; ?>: <input required id="website_author" type="text" name="website_author" value="<?php if(!empty($website_author)) print($website_author); ?>" /><br />
+            <?php echo $lang[$language]["config_copyrights"]; ?>: <input required id="website_copyrights" type="text" name="website_copyrights" value="<?php if(!empty($website_copyrights)) print($website_copyrights); ?>" /><br /><br />
+            <?php echo $lang[$language]["config_template"]; ?>: <select required id="website_template" name="website_template">
             <?php
 			$templates=scandir(getcwd()."/assets/templates", 1);
 			foreach ($templates as $key => $template){
-				if(($template!=".") && ($template!=".."))
+				if(($template!=".") && ($template!="..") && ($template!="index.html"))
 					print("<option>$template</option>");
 			}
 			?>            
             </select>			
             <hr />
             <h2><?php echo $lang[$language]["config_label2"]; ?></h2>       
-            <?php echo $lang[$language]["config_admin_username"]; ?>: <input id="admin_username" type="text" name="admin_username" value="<?php if(!empty($admin_username)) print($admin_username); ?>" /><br />
-            <?php echo $lang[$language]["config_admin_password"]; ?>: <input id="admin_password" type="text" name="admin_password" value="<?php if(!empty($admin_password)) print($admin_password); ?>" /><br />
-            <?php echo $lang[$language]["config_admin_email"]; ?>: <input id="admin_email" type="text" name="admin_email" value="<?php if(!empty($admin_email)) print($admin_email); ?>" /><br />
+            <?php echo $lang[$language]["config_admin_username"]; ?>: <input required id="admin_username" type="text" name="admin_username" value="<?php if(!empty($admin_username)) print($admin_username); ?>" /><br />
+            <?php echo $lang[$language]["config_admin_password"]; ?>: <input required id="admin_password" type="text" name="admin_password" value="<?php if(!empty($admin_password)) print($admin_password); ?>" /><br />
+            <?php echo $lang[$language]["config_admin_email"]; ?>: <input required id="admin_email" type="text" name="admin_email" value="<?php if(!empty($admin_email)) print($admin_email); ?>" /><br />
+            <?php echo $lang[$language]["config_admin_first_name"]; ?>: <input required id="admin_first_name" type="text" name="admin_first_name" value="<?php if(!empty($admin_first_name)) print($admin_first_name); ?>" /><br />
+            <?php echo $lang[$language]["config_admin_last_name"]; ?>: <input required id="admin_last_name" type="text" name="admin_last_name" value="<?php if(!empty($admin_last_name)) print($admin_last_name); ?>" /><br />
             <hr />
 			<input type="hidden" name="installer" value="step2" />
             <input type="hidden" name="language" value="<?php echo $language; ?>" />
@@ -269,12 +275,14 @@ $this->config=array(
 						fclose($file);
 						print("<p>".$lang[$language]["config_success"]."</p>");						
 					}
+
+                    $sql->execute_query("DROP TABLE `web_comments`, `web_menu`, `web_pages`, `web_settings`, `web_users`; ",[]);
 					$sql->execute_query("CREATE TABLE `web_settings`(
                         `key` varchar(50) NOT NULL default '',
                         `value` varchar(100) NOT NULL default '',
                         PRIMARY KEY  (`key`))
                         ENGINE=InnoDB
-                        DEFAULT CHARSET=utf8mb4;",
+                        DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;;",
                         []
                     );
 					
@@ -297,7 +305,7 @@ $this->config=array(
 					
                     $sql->execute_query("CREATE TABLE `web_users` (
                     `id` int NOT NULL AUTO_INCREMENT,
-                    `admin` tinyint(1) DEFAULT '0',
+                    `type` varchar(10) NOT NULL DEFAULT '',
                     `username` varchar(20) NOT NULL DEFAULT '',
                     `password` varchar(40) NOT NULL DEFAULT '',
                     `email` varchar(80) NOT NULL DEFAULT '',
@@ -310,19 +318,21 @@ $this->config=array(
                     `diraccess` tinyint(1) DEFAULT '1',
                     `enabled` tinyint(1) DEFAULT '0',
                      PRIMARY KEY  (`id`)
-                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");                        
-                    $sql->execute_query("INSERT INTO `web_users` (`admin`,`username`,`password`,`email`,`first_name`,`last_name`,`enabled`) VALUES
-                    (1,?,MD5(?),?,?,?,1);",
-                        [
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;");                        
+                    
+                    $sql->execute_query("INSERT INTO `web_users` (`id`,`type`,`username`,`password`,`email`,`first_name`,`last_name`,`enabled`) VALUES
+                    (1,?,?,MD5(?),?,?,?,1);",
+                        [   
+                            'admin',
                             $_POST["admin_username"],
                             $_POST["admin_password"],
                             $_POST["admin_email"],
-                            'Website',
-                            'Administrator',
+                            $_POST["admin_first_name"],
+                            $_POST["admin_last_name"],
                         ]
                     );
 
-					$sql->execute_query("CREATE TABLE `web_mainmenu` (
+					$sql->execute_query("CREATE TABLE `web_menu` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         `type` varchar(20) default NULL,
                         `text` varchar(50) NOT NULL default '', 
@@ -332,105 +342,113 @@ $this->config=array(
                         `page_id` int(11) default '0', 
                         PRIMARY KEY  (`id`))
                         ENGINE=InnoDB
-                        DEFAULT CHARSET=utf8mb4;",
+                        DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;;",
                         []
                     );
+                    
                     if($language == 'en'){
-                        $sql->execute_query("INSERT INTO `web_mainmenu` (`id`,`type`,`text`,`title`,`url`,`priority`,`page_id`) VALUES
-                            (1, 'admin', 'HOME', 'Admin Home', '/admin.php', 100, 0),
-                            (2, 'admin', 'SETTINGS', 'WEBSITE SETTINGS', '/admin.php?page=settings&section=main', 200, 0),
-                            (3, 'admin', 'MENU', 'MENU ADMINISTRATION (MAIN, QUICK, FOOTER)', '/admin.php?page=menu&section=main', 300, 0),
-                            (4, 'admin', 'PAGES', 'WEB PAGES ADMINISTRATION', '/admin.php?page=content&section=main', 400, 0),
-                            (5, 'admin', 'NEWS', 'NEWS ADMINISTRATION', '/admin.php?module=news&section=main', 500, 0),
-                            (6, 'admin', 'BLOG', 'BLOG ADMINISTRATION', '/admin.php?module=blog&section=main', 600, 0)",                            
+                        $sql->execute_query("INSERT INTO `web_menu` (`type`,`text`,`title`,`url`,`priority`,`page_id`) VALUES
+                            ('admin', 'HOME', 'Admin Home', '/admin.php', 100, 0),
+                            ('admin', 'SETTINGS', 'WEBSITE SETTINGS', '/admin.php?page=settings&section=main', 200, 0),
+                            ('admin', 'MENU', 'MENU ADMINISTRATION (MAIN, QUICK, FOOTER)', '/admin.php?page=menu&section=main', 300, 0),
+                            ('admin', 'CONTENT', 'WEB CONTENT ADMINISTRATION', '/admin.php?page=content&section=main', 400, 0),
+                            ('admin', 'USERS', 'USER ADMINISTRATION', '/admin.php?page=users&section=main', 500, 0),
+                            ('admin', 'MY-PROFILE', 'CHANGE MY INFO PROFILE', '/admin.php?page=profile&section=main', 600, 0),
+                            ('admin', 'LOG-OUT', 'LOG-OUT OF ADMIN SYSTEM', '/admin.php?page=logout', 700, 0),
+                            ('user', 'HOME', 'User Home', '/admin.php', 100, 0),
+                            ('user', 'CONTENT', 'WEB CONTENT ADMINISTRATION', '/admin.php?page=content&section=main', 400, 0),
+                            ('user', 'MY-PROFILE', 'CHANGE MY INFO PROFILE', '/admin.php?page=profile&section=main', 600, 0),
+                            ('user', 'LOG-OUT', 'LOG-OUT OF ADMIN SYSTEM', '/admin.php?logout=true', 700, 0),
+                            ('main', 'HOME', 'Home Page', '/', 100, 0),
+                            ('main', 'CONTACT', 'Contact Us', '/contacts.html', 100, 0)",
                             []
                         );
                     } else {
-                        $sql->execute_query("INSERT INTO `web_mainmenu` (`id`,`type`,`text`,`title`,`url`,`priority`,`page_id`) VALUES
-                            (1, 'admin', 'Начало', 'Админ начало', '/admin.php', 100, 0),
-                            (2, 'admin', 'Настройки', 'Админ настройки', '/admin.php?page=settings&section=main', 200, 0),
-                            (3, 'admin', 'Меню', 'Админ меню', '/admin.php?page=menu&section=main', 300, 0),
-                            (4, 'admin', 'Страници', 'Админ страници', '/admin.php?page=content&section=main', 400, 0),
-                            (5, 'admin', 'Новини', 'Админ новини', '/admin.php?module=news&section=main', 500, 0),
-                            (6, 'admin', 'Блог', 'Админ блог', '/admin.php?module=blog&section=main', 600, 0)",                      
+                        $sql->execute_query("INSERT INTO `web_menu` (`type`,`text`,`title`,`url`,`priority`,`page_id`) VALUES
+                            ('admin', 'Начало', 'Админ начало', '/admin.php', 100, 0),
+                            ('admin', 'Настройки', 'Админ настройки', '/admin.php?page=settings&section=main', 200, 0),
+                            ('admin', 'Меню', 'Админ меню', '/admin.php?page=menu&section=main', 300, 0),
+                            ('admin', 'Страници', 'Админ страници', '/admin.php?page=content&section=main', 400, 0),
+                            ('admin', 'Потребители', 'Админ потребители', '/admin.php?page=users&section=main', 500, 0),
+                            ('admin', 'Моят Профил', 'Промяна на моят профил', '/admin.php?page=profile&section=main', 600, 0),
+                            ('admin', 'ИЗХОД', 'Излизане от Системата!', '/admin.php?page=logout', 700, 0),
+                            ('user', 'Начало', 'Потребителско начало', '/admin.php', 100, 0),
+                            ('user', 'Страници', 'Админ страници', '/admin.php?page=content&section=main', 200, 0),
+                            ('user', 'Моят Профил', 'Промяна на моят профил', '/admin.php?page=profile&section=main', 300, 0),
+                            ('user', 'ИЗХОД', 'Излизане от Системата!', '/admin.php?logout=true', 400, 0),
+                            ('main', 'Начало', 'Към Главната Страница!', '/', 100, 0),
+                            ('main', 'За Контакт', 'Свържете се с нас сега!', '/contacts.html', 100, 0)",                      
                             []
                         );
                     }    
 					
-					$sql->execute_query("CREATE TABLE `web_pages`(
-                        `id` int(11) NOT NULL auto_increment,
-                        `url` varchar(50) NOT NULL default '',
-                        `title` varchar(150) NOT NULL default '',
+					$sql->execute_query("CREATE TABLE `web_pages` (
+                        `id` int NOT NULL AUTO_INCREMENT,
+                        `creator` int NOT NULL,
+                        `type` varchar(20) DEFAULT 'page',
+                        `url` varchar(50) NOT NULL,
+                        `title` varchar(150) NOT NULL,
                         `content` text NOT NULL,
-                        `author` varchar(50) default NULL,
-                        `custom` tinyint(1) default '0',
-                        `parameters` varchar(255) default NULL,
-                        `source` varchar(200) default NULL,
-                        `moved` varchar(250) default NULL,
-                        PRIMARY KEY  (`id`))
-                        ENGINE=InnoDB 
-                        DEFAULT CHARSET=utf8mb4;",
+                        `date` datetime DEFAULT CURRENT_TIMESTAMP,
+                        `comments` tinyint(1) DEFAULT '0',
+                        `frontpage` tinyint(1) DEFAULT '1',
+                        `author` varchar(50) DEFAULT 'Auto Generated',
+                        `custom` tinyint(1) DEFAULT '0',
+                        `parameters` varchar(255) DEFAULT NULL,
+                        `source` varchar(200) DEFAULT NULL,
+                        `moved` varchar(250) DEFAULT NULL,
+                        PRIMARY KEY (`id`),
+                        FOREIGN KEY (`creator`) REFERENCES `web_users`(`id`)
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;",
                         []
                     );					
 
                     $pages = [];
                     $pages["index.html"]=[
-                        1,"index.html",
+                        "index.html",
                         $language=="en" ? "Home Page" : "Начална страница",
                         $language=="en" ? "<h1>Home Page</h1><p>This is the home page of the website.</p>" : "<h1>Начална страница</h1><p>Това е началната страница на сайта.</p>",
-                        "Auto Generated",0,'','',NULL
+                        "Auto Generated"
                     ];
 
                     $pages["contacts.html"]=[
-                        2,"contacts.html",
+                        "contacts.html",
                         $language=="en" ? "Contact Us" : "Свържете се с нас",
                         $language=="en" ? "<h1>Contact Us</h1>\r\n<ul><li>Name: </li><li>Phone: </li><li>Email: </li></ul>" : "<h1>Свържете се с нас</h1>\r\n<ul><li>Име: </li><li>Телефон: </li><li>Имейл: </li></ul>",
-                        "Auto Generated",0,'','',NULL
+                        "Auto Generated"
                     ];
 
                     $pages["sitemap.html"]=[
-                        3,"sitemap.html",
+                        "sitemap.html",
                         $language=="en" ? "Website Sitemap" : "Карта на сайта",
                         $language=="en" ? "<h1>Sitemap</h1><p>This is the sitemap of the website.</p>" : "<h1>Карта на сайта</h1><p>Това е карта на сайта.</p>",
-                        "Auto Generated",1,'','sitemap.php',NULL
+                        "Auto Generated"
                     ];
 
-                    
-                    $sql->execute_query("INSERT INTO `web_pages` (`id`,`url`,`title`,`content`,`author`,`custom`,`parameters`,`source`,`moved`) VALUES
-                    (?,?,?,?,?,?,?,?,?),
-                    (?,?,?,?,?,?,?,?,?),
-                    (?,?,?,?,?,?,?,?,?)",array_merge($pages["index.html"],$pages["contacts.html"],$pages["sitemap.html"]));
+                    $sql->execute_query("INSERT INTO `web_pages` (`creator`,`type`,`url`,`title`,`content`,`author`) VALUES
+                    (1,'page',?,?,?,?),
+                    (1,'page',?,?,?,?),
+                    (1,'page',?,?,?,?)",array_merge($pages["index.html"],$pages["contacts.html"],$pages["sitemap.html"]));
+            				
+                    $sql->execute_query("CREATE TABLE `web_comments` (
+                        `id` int NOT NULL AUTO_INCREMENT,
+                        `page` int NOT NULL,
+                        `content` text NOT NULL,
+                        `date` datetime DEFAULT CURRENT_TIMESTAMP,
+                        `creator` int NOT NULL,
+                        PRIMARY KEY (`id`),
+                        FOREIGN KEY (`page`) REFERENCES `web_pages`(`id`) ON DELETE CASCADE,
+                        FOREIGN KEY (`creator`) REFERENCES `web_users`(`id`) ON DELETE CASCADE
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;",
+                        []
+                    );	
 
-
-                    $sql->execute_query("CREATE TABLE `web_news` (
-                    `id` int(11) NOT NULL auto_increment,
-                    `url` varchar(200) NOT NULL default '',
-                    `title` varchar(200) NOT NULL default '',
-                    `content` text NOT NULL, 
-                    `author` varchar(50) NOT NULL default '',
-                    `date` datetime default NULL,
-                    `comments` tinyint(1) default '0',
-                    `frontpage` tinyint(1) default '1',
-                    PRIMARY KEY  (`id`),
-                    FULLTEXT KEY `title` (`title`,`content`))
-                    ENGINE=InnoDB
-                    DEFAULT CHARSET=utf8mb4;",
-                    []);
-
-                    $sql->execute_query("CREATE TABLE `web_blog` (
-                    `id` int(11) NOT NULL auto_increment,
-                    `url` varchar(200) NOT NULL default '',
-                    `title` varchar(200) NOT NULL default '',
-                    `content` text NOT NULL,
-                    `author` varchar(50) NOT NULL default '',
-                    `date` datetime default NULL,
-                    `comments` tinyint(1) default '0',
-                    `enabled` tinyint(1) default '0',
-                    `frontpage` tinyint(1) default '1',
-                    PRIMARY KEY  (`id`))
-                    ENGINE=InnoDB 
-                    DEFAULT CHARSET=utf8mb4;",
-                    []);					
+                    $sql->execute_query("CREATE TABLE `web_uploads` (
+                        `page` int NOT NULL,
+                        `filename` varchar(250) NOT NULL,
+                        PRIMARY KEY (`page`,`filename`),
+                        FOREIGN KEY (`page`) REFERENCES `web_pages`(`id`) ON DELETE CASCADE
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;",[]);
 
 					print("<p>".$lang[$language]["installer_step2_success"]."</p>");										
 					

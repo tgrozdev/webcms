@@ -11,13 +11,7 @@ jQuery(document).ready(function () {
                 'section': 'menuup',
                 'id': id
             }, function (response) { 
-                if (response.ok == "false") {
-                    return false;
-                } else if (response.ok == "success") {
-                    // all good
-                } else {
-                    return false;
-                }
+                if (response.ok == false) { window.alert(response.error); }
             });
     }
 
@@ -31,14 +25,8 @@ jQuery(document).ready(function () {
                 'page' : 'menu',
                 'section': 'menudown',
                 'id': id
-            }, function (response) {                                
-                if (response.ok == "false") {
-                    return false;
-                } else if (response.ok == "success") {
-                    // all good
-                } else {
-                    return false;
-                }
+            }, function (response) {            
+                if (!response.ok) { window.alert(response.error); }
             });
     }
 
@@ -51,13 +39,7 @@ jQuery(document).ready(function () {
                 'section': 'delete',
                 'id': id
             }, function (response) {  
-                if (response.ok == "false") {
-                    return false;
-                } else if (response.ok == "success") {
-                    console.log("done");
-                } else {
-                    return false;
-                }
+                if (response.ok == false) { window.alert(response.error); }
             });
     }
 

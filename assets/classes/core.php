@@ -16,6 +16,7 @@ class Core{
 	function __construct() {
 		// Зареждаме настройките на сървъра от конфигурационния файл
 		require("webconf.php");
+		$this->config["rootdir"] = getcwd()."/";
 		// настройваме MySQL връзката с UFT-8 многоезичен енкодинг
 		mb_internal_encoding('UTF-8');
 		mb_regex_encoding('UTF-8');
@@ -60,6 +61,13 @@ class Core{
 		}
 	}
 	
+	function GetNextID($table)
+    {
+        $query = "SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '" . $this->config["mysql_db"] . "' AND TABLE_NAME = '$table'";
+        $row = current($this->query($query));
+        return $row["AUTO_INCREMENT"]+1;
+    }
+
 	function GetVar($var)
     {
         if (isset($_GET[$var])) {
@@ -69,6 +77,62 @@ class Core{
         } else {
             return null;
         }
+    }
+
+	function convertPHPSizeToBytes($sSize)
+    {
+        //
+        $sSuffix = strtoupper(substr($sSize, -1));
+        if (!in_array($sSuffix,array('P','T','G','M','K'))){
+            return (int)$sSize;  
+        } 
+        $iValue = substr($sSize, 0, -1);
+        switch ($sSuffix) {
+            case 'P': $iValue *= 1024;
+            case 'T': $iValue *= 1024;
+            case 'G': $iValue *= 1024;
+            case 'M': $iValue *= 1024;
+            case 'K': $iValue *= 1024; break;
+        }
+        return (int)$iValue;
+    }
+
+    function getMaximumFileUploadSize()  
+    {  
+        return min($this->convertPHPSizeToBytes(ini_get('post_max_size')), $this->convertPHPSizeToBytes(ini_get('upload_max_filesize')));  
+    }
+
+	function AJAXUpload(){
+		$data_array_1 = explode(";", $_POST['data']);
+	    $data_array_2 = explode(",", $data_array_1[1]);
+        unset($data_array_1);
+	    $data = base64_decode($data_array_2[1]);
+        unset($data_array_2);
+        $filename = $this->SafeImageName($_POST['filename']);        
+        $fp = fopen($this->config["rootdir"]."uploads/".$filename,'w');
+        fwrite($fp, $data);
+        fclose($fp);
+		return $filename;
+	}	
+
+  	function ResizePhoto($source, $destination, $maxwidth = 120,$quality=70) {
+        $ext= pathinfo($source, PATHINFO_EXTENSION);        
+        if(($ext=="jpg") || ($ext=="jpeg")){
+            $image = imagecreatefromjpeg($this->config["rootdir"].$source);
+        } elseif ($ext=="png"){
+            $image = imagecreatefrompng($this->config["rootdir"].$source);
+        } else {
+            return false;
+        }   
+        list($iwidth,$iheight)=getimagesize($this->config["rootdir"] . $source);
+        $new_width = $maxwidth;
+        $new_height = (int) ($iheight / ($iwidth / $maxwidth));
+        $resized = imagecreatetruecolor($new_width, $new_height);
+        imagecopyresampled($resized, $image, 0, 0, 0, 0, $new_width, $new_height, $iwidth, $iheight);
+        imagejpeg($resized, $this->config["rootdir"] . $destination, $quality);
+        imagedestroy($image);
+        imagedestroy($resized);
+		return true;
     }
 
     function EncodeQuotes($text){
@@ -89,10 +153,22 @@ class Core{
 		$bad_characters=array(" ","'","\"","/","?","!",".",",",":",";","&");
 		$good_characters=array("-","","","","","","","","","","");
 		$safe_url=str_replace($bad_characters,$good_characters,$tmp_url);
-		$tmp_url=substr($safe_url,0,150).".html";
+		$tmp_url=substr($safe_url,0,150);
 		$safe_url=$tmp_url;
 		return $safe_url;
 	}
+
+	function SafeImageName($url){
+		$tmp_url=strtolower($url);
+		$bad_characters=array(" ","'","\"","/","?","!",",",":",";","&");
+		$good_characters=array("-","","","","","","","","","");
+		$safe_url=str_replace($bad_characters,$good_characters,$tmp_url);
+		$tmp_url=substr($safe_url,0,150);
+		$safe_url=$tmp_url;
+		return $safe_url;
+	}
+
+	
 	
 	function GetWebContent($url){
 		@set_time_limit(400);

@@ -1,0 +1,56 @@
+<form name="changesettings" action="admin.php?page=settings&section=changesettings" method="post">
+    <div class="row">
+        <div class="col-12 col-md-12">
+            <h2>Change Website Settings</h2>
+            [{MESSAGE}]
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="name" name="name" size="50" maxlength="50" placeholder="Website Title/Name" value="[{CONFIG-NAME}]" required>
+                <label id="name_label" for="name">Website Title/Name</label>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="slogan" name="slogan" size="50" maxlength="50" placeholder="Website Slogan" value="[{CONFIG-SLOGAN}]" required>
+                <label id="slogan_label" for="slogan">Website Slogan</label>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="url" name="url" size="30" maxlength="50" placeholder="URL www or non-www" value="[{CONFIG-URL}]" required>
+                <label id="url_label" for="url">URL www or non-www</label>
+            </div>
+        </div>  
+        <div class="col-12 col-md-6">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="author" name="author" size="20" maxlength="50" placeholder="Website Author" value="[{CONFIG-AUTHOR}]" required>
+                <label id="author_label" for="author">Website Author</label>
+            </div>
+        </div>
+        <div class="col-12 col-md-12">
+            <input type="hidden" name="page" value="settings">
+            <input type="hidden" name="section" value="changesettings">
+            <input type="submit" value="CLICK TO UPDATE!">
+        </div>
+    </div>
+    </form>
+    <hr/>
+    <form name="changesettings" action="admin.php?page=settings&section=changesettings" method="post">
+        <div class="row">
+            <div class="col-12 col-md-12">
+                <h2>Change Website Template</h2>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-floating">
+                    <select class="form-control" id="template" name="template" required>[{TEMPLATES}]</select>
+                    <label id="template_label" for="template">Select Template</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-12">
+                <input type="hidden" name="page" value="settings">
+                <input type="hidden" name="section" value="changetemplate">
+                <input type="submit" value="Change Template">
+            </div>
+        </div>
+    </form>

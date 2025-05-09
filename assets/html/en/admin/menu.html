@@ -1,0 +1,47 @@
+<form name="menueditor" action="/admin.php" method="post">
+<div class="row">    
+    <div class="col-12 col-md-12">
+        <h2>MENU EDITOR</h2>
+        <div class="form-floating">
+            <select class="form-select" id="menu" name="menu">
+                [{MENU}]
+            </select>
+            <label for="menu">Choose Menu</label>
+        </div>                
+    </div>
+    <div class="col-12 col-md-12">
+        <div class="form-floating">
+            <input type="text" class="form-control" id="url" name="url" placeholder="URL" required value="[{URL}]">
+            <label for="url">URL</label>
+        </div>
+        If page is external please include <strong>https://www.domain.com/fullurl.html</strong> else just put <strong>/filename.html</strong>
+    </div>
+    <div class="col-12 col-md-12">
+        <div class="form-floating">
+            <input type="text" class="form-control" id="title" name="title" placeholder="Title" required value="[{TITLE}]">
+            <label for="title">Title</label>
+        </div>
+    </div>
+    <div class="col-12 col-md-12">
+        <div class="form-floating">
+            <input type="text" class="form-control" id="text" name="text" placeholder="Text" required value="[{TEXT}]">
+            <label for="text">Text</label>
+        </div>
+    </div>
+    <div class="col-12 col-md-12">
+        <div class="form-floating">
+            <input type="number" class="form-control" id="priority" name="priority" placeholder="OrderingPriority" required value="[{PRIORITY}]">
+            <label for="priority">Priority</label>
+        </div>
+        Note: Lower numbers are higher priority and show before higher numbers.
+    </div>    
+</div>
+<div class="row">
+    <div class="col-12 col-md-12">
+        <input type="hidden" name="page" value="menu">
+        <input type="hidden" name="id" value="[{ID}]">
+        <input type="hidden" name="section" value="saveupdate">
+        <input type="submit" value="POST NEW MENU/SAVE CHANGES"> | <input type="reset" value="CLEAR FORM">
+    </div>
+</div>
+</form>

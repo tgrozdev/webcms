@@ -1,0 +1,95 @@
+<form name="changeinfo" action="admin.php" method="post">        
+    <div class="row">
+        <div class="col-12 col-md-12">
+            <h2>Промяна на информацията ми</h2>
+            [{MESSAGE}]
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="first_name" name="first_name" size="20" maxlength="20" value="[{FIRST-NAME}]" required>
+                <label id="first_name" for="first_name">Име</label>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="last_name" name="last_name" size="20" maxlength="20" value="[{LAST-NAME}]" required>
+                <label id="last_name" for="last_name">Фамилия</label>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="email" name="email" size="20" maxlength="80" value="[{EMAIL}]" required>
+                <label id="email" for="email">Имейл</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-6 col-md-3">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="homepage" name="homepage" size="20" maxlength="80" value="[{HOMEPAGE}]">
+                <label id="homepage" for="homepage">Уеб сайт</label>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="job_industry" name="job_industry" size="20" maxlength="50" value="[{JOB-INDUSTRY}]">
+                <label id="job_industry" for="job_industry">Длъжност/Индустрия</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12 col-md-12">
+            <input type="hidden" name="page" value="profile">
+            <input type="hidden" name="section" value="changeinfo" required>
+            <input type="submit" value="КЛИКНИ ЗА ДА ПРОМЕНИШ ИНФОРМАЦИЯТА СИ!">
+        </div>
+    </div>
+</form>
+<hr/>
+<form name="changeusername" action="admin.php" method="post">        
+    <div class="row">
+        <div class="col-12 col-md-12">
+            <h2>Промяна на потребителското име</h2>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="user" name="user" size="20" maxlength="20" value="[{MY-USERNAME}]" required>
+                <label id="user_label" for="user">Потребителско име</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">    
+        <div class="col-12 col-md-12">
+            <input type="hidden" name="page" value="profile">
+            <input type="hidden" name="section" value="changeusername" required>
+            <input type="submit" value="КЛИКНИ ЗА ДА ПРОМЕНИШ ПОТРЕБИТЕЛСКОТО ТИ ИМЕ!">
+        </div>
+    </div>
+</form>
+<hr/>
+<form name="changepassword" action="admin.php" method="post">
+    <div class="row">
+        <div class="col-12 col-md-12">
+            <h2>Промяна на паролата</h2>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="form-floating">
+                <input class="form-control" type="password" id="new1_password" name="new1_password" size="20" maxlength="40" required>
+                <label id="new1_password_label" for="new1_password">Нова парола</label>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="form-floating">
+                <input class="form-control" type="password" id="new2_password" name="new2_password" size="20" maxlength="40" required>
+                <label id="new2_password_label" for="new2_password">Потвърди новата парола</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12 col-md-12">
+            <input type="hidden" name="page" value="profile">
+            <input type="hidden" name="section" value="changepassword" required>
+            <input type="submit" value="КЛИКНИ ЗА ДА ПРОМЕНИШ ПАРОЛАТА!">
+        </div>
+    </div>
+</form>

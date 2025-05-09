@@ -1,0 +1,70 @@
+<form name="addcontent" action="/admin.php" method="post">
+    <div class="row">
+        <div class="col-12 col-md-12">
+            <h2>Add New/EDIT Content</h2>            
+        </div>
+        <div class="form-floating">
+            <select class="form-control" id="type" name="type">
+                [{TYPES}]
+            </select>
+            <label id="type_label" for="type">Select Content Type</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="title" name="title" size="50" maxlength="50" placeholder="TITLE" value="[{TITLE}]" required>
+                <label id="title_label" for="title">TITLE</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="author" name="author" size="50" maxlength="50" placeholder="AUTHOR" value="[{AUTHOR}]" required>
+                <label id="author_label" for="author">AUTHOR</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="form-floating">
+                <input class="form-control" type="datetime" id="date" name="date" placeholder="Date Time" value="[{DATE}]">
+                <label id="date_label" for="date">Date Time</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12">
+            <h2>Article/Content</h2>
+        </div>
+        <div class="col-12 col-md-12">
+            <textarea id="content" name="content" cols="100" rows="10">[{CONTENT}]</textarea><br><br />
+            <script language="javascript1.2">
+                make_wyzz('content');
+            </script>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="source" name="source" size="100" maxlength="250" placeholder="CUSTOM CONTENT FILE" value="[{SOURCE}]">
+                <label id="source_label" for="source">CUSTOM CONTENT FILE</label>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="parameters" name="parameters" size="100" maxlength="250" placeholder="PARAMETERS" value="[{PARAMETERS}]">
+                <label id="parameters_label" for="parameters">PARAMETERS</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12">
+            <input type="hidden" name="id" value="[{ID}]">
+            <input type="hidden" name="page" value="content">
+            <input type="hidden" name="section" value="[{SECTION}]">
+            <input type="submit" value="POST NEW CONTENT/SAVE CHANGES"> | <input type="reset" value="CLEAR FORM">
+        </div>
+    </div>
+</form><br/><br/>

@@ -16,8 +16,7 @@ $lang["bg"]=[
     "blog"=>"Блог",
     "news"=>"Новини",
     "page"=>"Страница",
-    "add_more_content"=>"Добави още съдържание",
-    "delete_page"=>"Сигурен ли си, че искаш да изтриеш тази страница?"
+    "add_more_content"=>"Добави още съдържание"
 ];
 $lang["en"]=[
     "title"=>"Content Admin",
@@ -35,8 +34,7 @@ $lang["en"]=[
     "blog"=>"Blog",
     "news"=>"News",
     "page"=>"Page",
-    "add_more_content"=>"Add more content",
-    "delete_page"=>"Are you sure you want to delete this page?"
+    "add_more_content"=>"Add more content"
 ];
 
 $tags["[{MESSAGE}]"] = "";
@@ -102,8 +100,8 @@ switch ($this->GetVar("section")) {
                 } else {
                     $tags["[{MESSAGE}]"] .= "UPDATE CONTENT PAGE ID " . $_POST["id"] . "<br>";
                     $result=$this->Query(
-                        "UPDATE `web_pages` SET `creator`=?,`type`=?,`url`=?,`title`=?,`content`=?,`date`=?,`author`=?,`comments`=?,`custom`=?,`parameters`=?,`source`=? WHERE `id`=?",
-                        [$this->user["id"],$_POST["type"], $url, $title, $content, $_POST["date"], $author, $comments, $custom, $parameters, $source, $_POST["id"]]
+                        "UPDATE `web_pages` SET `type`=?,`url`=?,`title`=?,`content`=?,`date`=?,`author`=?,`comments`=?,`custom`=?,`parameters`=?,`source`=? WHERE `id`=? AND `creator`=?",
+                        [$_POST["type"], $url, $title, $content, $_POST["date"], $author, $comments, $custom, $parameters, $source, $_POST["id"],$this->user["id"]]
                     );
                     if($result){
                         $tags["[{MESSAGE}]"] .= "<br>".$lang[$this->config["lang"]]["content_updated"]."<br><br>";
@@ -126,7 +124,7 @@ switch ($this->GetVar("section")) {
         // EDIT NEWS RELEASE BELOW
         //====================================================================================
     case "edit": {
-            $result = $this->Query("select * from `web_pages` where `id`=? limit 1", [$this->GetVar("id")]);
+            $result = $this->Query("select * from `web_pages` where `id`=? AND `creator`=? limit 1", [$this->GetVar("id"),$this->user["id"]]);
             $page = current($result);
 
             $tags["[{ID}]"] = $page["id"];
@@ -190,7 +188,7 @@ switch ($this->GetVar("section")) {
             break;
         }
         case "delete": {            
-            $result=$this->Query("DELETE FROM `web_pages` WHERE `id`=? limit 1",[$this->GetVar("id")]);
+            $result=$this->Query("DELETE FROM `web_pages` WHERE `id`=? AND `creator`=? limit 1",[$this->GetVar("id"),$this->user["id"]  ]);
             //$this->ReturnResponse($result);
             //break;
         }
@@ -198,9 +196,9 @@ switch ($this->GetVar("section")) {
     default: {
             $content = "<a href=\"/admin.php?page=content&section=new\">".($lang[$this->config["lang"]]["add_more_content"])."</a><br><br>";
             $content .= '<table width="100%"><tr><td>action</td><td>URL</td></tr>';
-            $result = $this->Query("SELECT `web_pages`.*, `web_users`.`username` FROM `web_pages` LEFT JOIN `web_users` ON `web_pages`.`creator`=`web_users`.`id` where `web_pages`.`moved` is NULL order by `web_pages`.`type` desc, `web_pages`.`date` desc");
+            $result = $this->Query("select * from `web_pages` where `creator`=? and `moved` is NULL order by `type` desc, `date` desc",[$this->user["id"]]);
             foreach ($result as $row) {                
-                    $content .= "<tr><td><a onclick=\"javascript:return confirm('".($lang[$this->config["lang"]]["delete_page"])."')\" href=\"/admin.php?page=content&section=delete&id=" . $row["id"] . "\"><img src=\"/assets/images/delete-small.jpg\" alt=\"DELETE PAGE\"></a></td><td><a href=\"/admin.php?page=content&section=edit&id=" . $row["id"] . "\">" . strtoupper($row["type"]) . " - " . $row["title"] . "</a><br>User : " . $row["username"] . " | Author : " . $row["author"] . " | URL: /".strtolower($row["type"]) . "/" . $row["url"] . " </td></tr>";
+                    $content .= "<tr><td><a onclick=\"javascript:return confirm('Are you sure you want to delete this page ?')\" href=\"/admin.php?page=content&section=delete&id=" . $row["id"] . "\"><img src=\"/assets/images/delete-small.jpg\" alt=\"DELETE PAGE\"></a></td><td><a href=\"/admin.php?page=content&section=edit&id=" . $row["id"] . "\">" . strtoupper($row["type"]) . " - " . $row["title"] . "</a><br>Author : " . $row["author"] . " | URL: /".strtolower($row["type"]) . "/" . $row["url"] . " </td></tr>";
             }
             $content .= "</table>";
             $tags["[{TITLE}]"] = $lang[$this->config["lang"]]["content_manager"];

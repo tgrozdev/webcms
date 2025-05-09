@@ -1,0 +1,92 @@
+<form name="addcontent" action="/admin.php" method="post">
+    <div class="row">
+        <div class="col-12 col-md-12">
+            <h2>Добавяне/Редактиране на Съдържание</h2>
+            [{MESSAGE}]
+        </div>
+        <div class="form-floating">
+            <select class="form-control" id="type" name="type">
+                [{TYPES}]
+            </select>
+            <label id="type_label" for="type">Избери Тип Съдържание</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="title" name="title" size="50" maxlength="50" placeholder="TITLE" value="[{CONTENT-TITLE}]" required>
+                <label id="title_label" for="title">Заглавие</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="author" name="author" size="50" maxlength="50" placeholder="AUTHOR" value="[{AUTHOR}]" required>
+                <label id="author_label" for="author">Автор</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="form-floating">
+                <input class="form-control" type="date" id="date" name="date" placeholder="Дата" value="[{DATE}]">
+                <label id="date_label" for="date">Дата на публикуване</label>
+            </div>
+            <i>(Бъдещи публикации ще бъдат забавени до достигането на датата)</i>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12 col-md-12">
+            <h2>Съдържание</h2>
+        </div>
+        <div class="col-12 col-md-12">
+            <textarea id="content" name="content" cols="100" rows="10">[{CONTENT}]</textarea><br><br />
+            <script language="javascript1.2">
+                make_wyzz('content');
+            </script>
+        </div>
+        <div class="col-4 col-md-4">
+            <div class="form-floating">
+                <input class="form-control" type="file" id="photo" name="photo" placeholder="Upload Image/Photo" value="">                
+                <label id="photo_label" for="photo">Качи изображение/фото</label>
+            </div>
+            <input type="hidden" id="maxpostsize" name="maxpostsize" value="[{MAXPOSTSIZE}]">
+        </div>
+        <div class="col-8 col-md-8" id="images">[{IMAGES}]</div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12 col-md-6">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="comments" name="comments" size="100" maxlength="250" placeholder="Enable Comments" value="1" checked>
+                <label class="form-check-label" id="comments_label" for="comments">Разреши коментари</label>
+            </div>
+        </div>        
+    </div>
+    <div class="row mt-3">
+        <div class="col-12 col-md-6">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="source" name="source" size="100" maxlength="250" placeholder="Собствено съдържание" value="[{SOURCE}]">
+                <label id="source_label" for="source">Собствено съдържание</label>
+            </div>
+            <i>(Ако желаете да включите файл, посочете пълния път и име тук)</i>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-floating">
+                <input class="form-control" type="text" id="parameters" name="parameters" size="100" maxlength="250" placeholder="Параметри" value="[{PARAMETERS}]">
+                <label id="parameters_label" for="parameters">Параметри</label>
+            </div>
+            <i>(Ако желаете да предадете параметри към включения файл, посочете ги тук)</i>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12 col-md-12">
+            <input type="hidden" id="pageid" name="id" value="[{ID}]">
+            <input type="hidden" name="url" value="[{URL}]">
+            <input type="hidden" name="page" value="content">
+            <input type="hidden" name="section" value="[{SECTION}]">
+            <input type="submit" value="ПУБЛИКУВАЙ/СЪХРАНЯЙ"> | <input type="reset" value="ИЗЧИСТИ">
+        </div>
+    </div>
+</form>
+<br/><br/>

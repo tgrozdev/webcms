@@ -1,9 +1,9 @@
 <?php
-$lang["bg"]=[   
-    "title"=>"Админ Панел",
+$lang["bg"]=[
+    "title"=>"Потребителски Панел",
 ];
 $lang["en"]=[
-    "title"=>"Admin Dashboard",
+    "title"=>"User Dashboard",
 ];
 switch($this->GetVar("section")){
     default: {
