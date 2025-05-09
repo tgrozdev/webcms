@@ -68,7 +68,7 @@ switch ($this->GetVar("section")) {
                 $tags["[{MESSAGE}]"] .= "<br>".$lang[$this->config["lang"]]["error_title"]."<br>";
             } else {
                 $title = strlen($_POST["title"]) > 180 ? substr($_POST["title"], 0, 180) : $_POST["title"];
-                $url = $this->SafeURL($title).".html";
+                $url = "/".$this->SafeURL($title).".html";
             }
 
             //--------------------------------------------------------------------
@@ -98,7 +98,10 @@ switch ($this->GetVar("section")) {
                         $tags["[{MESSAGE}]"] .= "<br>".$lang[$this->config["lang"]]["content_added"]."<br><br>";
                     } else {
                         $tags["[{MESSAGE}]"] .= "<br>".$lang[$this->config["lang"]]["content_not_added"]."<br><br>";
-                    }                        
+                    }  
+                    // add page to menu!
+                    $this->Query("INSERT INTO `web_menu` (`type`,`text`,`title`,`url`,`priority`) VALUES (?,?,?,?,?);", [
+                        $_POST["type"], $title, $title, $url, 300]);
                 } else {
                     $tags["[{MESSAGE}]"] .= "UPDATE CONTENT PAGE ID " . $_POST["id"] . "<br>";
                     $result=$this->Query(
@@ -200,7 +203,7 @@ switch ($this->GetVar("section")) {
             $content .= '<table width="100%"><tr><td>action</td><td>URL</td></tr>';
             $result = $this->Query("SELECT `web_pages`.*, `web_users`.`username` FROM `web_pages` LEFT JOIN `web_users` ON `web_pages`.`creator`=`web_users`.`id` where `web_pages`.`moved` is NULL order by `web_pages`.`type` desc, `web_pages`.`date` desc");
             foreach ($result as $row) {                
-                    $content .= "<tr><td><a onclick=\"javascript:return confirm('".($lang[$this->config["lang"]]["delete_page"])."')\" href=\"/admin.php?page=content&section=delete&id=" . $row["id"] . "\"><img src=\"/assets/images/delete-small.jpg\" alt=\"DELETE PAGE\"></a></td><td><a href=\"/admin.php?page=content&section=edit&id=" . $row["id"] . "\">" . strtoupper($row["type"]) . " - " . $row["title"] . "</a><br>User : " . $row["username"] . " | Author : " . $row["author"] . " | URL: /".strtolower($row["type"]) . "/" . $row["url"] . " </td></tr>";
+                    $content .= "<tr><td><a onclick=\"javascript:return confirm('".($lang[$this->config["lang"]]["delete_page"])."')\" href=\"/admin.php?page=content&section=delete&id=" . $row["id"] . "\"><img src=\"/assets/images/delete-small.jpg\" alt=\"DELETE PAGE\"></a></td><td><a href=\"/admin.php?page=content&section=edit&id=" . $row["id"] . "\">" . strtoupper($row["type"]) . " - " . $row["title"] . "</a><br>User : " . $row["username"] . " | Author : " . $row["author"] . " | URL: " . $row["url"] . " </td></tr>";
             }
             $content .= "</table>";
             $tags["[{TITLE}]"] = $lang[$this->config["lang"]]["content_manager"];

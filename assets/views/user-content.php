@@ -66,7 +66,7 @@ switch ($this->GetVar("section")) {
                 $tags["[{MESSAGE}]"] .= "<br>".$lang[$this->config["lang"]]["error_title"]."<br>";
             } else {
                 $title = strlen($_POST["title"]) > 180 ? substr($_POST["title"], 0, 180) : $_POST["title"];
-                $url = $this->SafeURL($title).".html";
+                $url = "/".$this->SafeURL($title).".html";
             }
 
             //--------------------------------------------------------------------

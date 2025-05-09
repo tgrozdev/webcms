@@ -276,7 +276,24 @@ $this->config=array(
 						print("<p>".$lang[$language]["config_success"]."</p>");						
 					}
 
-                    $sql->execute_query("DROP TABLE `web_comments`, `web_menu`, `web_pages`, `web_settings`, `web_users`; ",[]);
+                    if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on') {
+                        // no SSL request
+                        $live="http://".$_SERVER["HTTP_HOST"]."/api.php";
+                    } else {
+                        $live="https://".$_SERVER["HTTP_HOST"]."/api.php";
+                    }
+                    // edit rect file and change the url
+                    $files=scandir(getcwd()."/_next/static/chunks/app/",1);
+                    foreach ($files as $key => $file){
+                        if(($file!=".") && ($file!="..") && ($file!="index.html") && is_file(getcwd()."/_next/static/chunks/app/".$file))
+                            $filename=getcwd()."/_next/static/chunks/app/".$file;
+                            $rect = file_get_contents($filename);
+                            $rect = str_replace("http://localhost/api.php", $live, $rect);
+                            file_put_contents($filename, $rect);
+                    }
+
+                    // drop all tables
+                    $sql->execute_query("DROP TABLE `web_comments`, `web_menu`, `web_pages`, `web_settings`, `web_users`, `web_uploads`; ",[]);
 					$sql->execute_query("CREATE TABLE `web_settings`(
                         `key` varchar(50) NOT NULL default '',
                         `value` varchar(100) NOT NULL default '',
@@ -360,7 +377,8 @@ $this->config=array(
                             ('user', 'MY-PROFILE', 'CHANGE MY INFO PROFILE', '/admin.php?page=profile&section=main', 600, 0),
                             ('user', 'LOG-OUT', 'LOG-OUT OF ADMIN SYSTEM', '/admin.php?logout=true', 700, 0),
                             ('main', 'HOME', 'Home Page', '/', 100, 0),
-                            ('main', 'CONTACT', 'Contact Us', '/contacts.html', 100, 0)",
+                            ('main', 'CONTACT', 'Contact Us', '/contacts.html', 100, 0),
+                            ('main', 'SITEMAP', 'Sitemap', '/sitemap.html', 100, 0)",
                             []
                         );
                     } else {
@@ -377,7 +395,8 @@ $this->config=array(
                             ('user', 'Моят Профил', 'Промяна на моят профил', '/admin.php?page=profile&section=main', 300, 0),
                             ('user', 'ИЗХОД', 'Излизане от Системата!', '/admin.php?logout=true', 400, 0),
                             ('main', 'Начало', 'Към Главната Страница!', '/', 100, 0),
-                            ('main', 'За Контакт', 'Свържете се с нас сега!', '/contacts.html', 100, 0)",                      
+                            ('main', 'За Контакт', 'Свържете се с нас сега!', '/contacts.html', 100, 0),                      
+                            ('main', 'Карта на сайта', 'Карта на сайта', '/sitemap.html', 100, 0)",
                             []
                         );
                     }    
@@ -404,22 +423,22 @@ $this->config=array(
                     );					
 
                     $pages = [];
-                    $pages["index.html"]=[
-                        "index.html",
+                    $pages["/"]=[
+                        "/",
                         $language=="en" ? "Home Page" : "Начална страница",
                         $language=="en" ? "<h1>Home Page</h1><p>This is the home page of the website.</p>" : "<h1>Начална страница</h1><p>Това е началната страница на сайта.</p>",
                         "Auto Generated"
                     ];
 
                     $pages["contacts.html"]=[
-                        "contacts.html",
+                        "/contacts.html",
                         $language=="en" ? "Contact Us" : "Свържете се с нас",
                         $language=="en" ? "<h1>Contact Us</h1>\r\n<ul><li>Name: </li><li>Phone: </li><li>Email: </li></ul>" : "<h1>Свържете се с нас</h1>\r\n<ul><li>Име: </li><li>Телефон: </li><li>Имейл: </li></ul>",
                         "Auto Generated"
                     ];
 
                     $pages["sitemap.html"]=[
-                        "sitemap.html",
+                        "/sitemap.html",
                         $language=="en" ? "Website Sitemap" : "Карта на сайта",
                         $language=="en" ? "<h1>Sitemap</h1><p>This is the sitemap of the website.</p>" : "<h1>Карта на сайта</h1><p>Това е карта на сайта.</p>",
                         "Auto Generated"
@@ -428,7 +447,7 @@ $this->config=array(
                     $sql->execute_query("INSERT INTO `web_pages` (`creator`,`type`,`url`,`title`,`content`,`author`) VALUES
                     (1,'page',?,?,?,?),
                     (1,'page',?,?,?,?),
-                    (1,'page',?,?,?,?)",array_merge($pages["index.html"],$pages["contacts.html"],$pages["sitemap.html"]));
+                    (1,'page',?,?,?,?)",array_merge($pages["/"],$pages["contacts.html"],$pages["sitemap.html"]));
             				
                     $sql->execute_query("CREATE TABLE `web_comments` (
                         `id` int NOT NULL AUTO_INCREMENT,
@@ -446,8 +465,7 @@ $this->config=array(
                     $sql->execute_query("CREATE TABLE `web_uploads` (
                         `page` int NOT NULL,
                         `filename` varchar(250) NOT NULL,
-                        PRIMARY KEY (`page`,`filename`),
-                        FOREIGN KEY (`page`) REFERENCES `web_pages`(`id`) ON DELETE CASCADE
+                        PRIMARY KEY (`page`,`filename`)
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;",[]);
 
 					print("<p>".$lang[$language]["installer_step2_success"]."</p>");										

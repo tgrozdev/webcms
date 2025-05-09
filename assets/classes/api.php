@@ -7,9 +7,10 @@ require("assets/classes/core.php");
 
 class Result {
     public $ok = false;
-    public $data = [];
+    public $menu = [];
+    public $content = [];
     public $error = "";
-    public $debug = [];
+    public $debug = "";
 }
 
 class API extends Core{
@@ -41,6 +42,14 @@ class API extends Core{
     function Loader(){
         $action = $this->GetVar("action");
         switch($action){
+            case "LoadContent" : {
+                //load content
+                $this->response->ok=true;
+                $this->response->menu=$this->Query("SELECT * FROM `web_menu` WHERE `type`=? ORDER BY `priority` ASC",["main"]);
+                $this->response->content=$this->Query("SELECT * FROM `web_pages` WHERE `moved` IS NULL ORDER BY `date` DESC");
+                $this->ReturnResponse();
+                break;
+            }
             case "getconfig" : {
                 //config
                 $this->response->ok=true;
@@ -55,27 +64,13 @@ class API extends Core{
                 $this->ReturnResponse();
                 break;
             }
-            case "getpages" : {
+            case "getcontent" : {
                 //print menu items
                 $this->response->ok=true;
-                $this->response->data=$this->Query("SELECT * FROM `web_pages` WHERE `type`='page' AND `moved` IS NULL ORDER BY `date` DESC");
+                $this->response->data=$this->Query("SELECT * FROM `web_pages` WHERE `moved` IS NULL ORDER BY `date` DESC");
                 $this->ReturnResponse();
                 break;
-            }
-            case "getnews" : {
-                //print menu items
-                $this->response->ok=true;
-                $this->response->data=$this->Query("SELECT * FROM `web_pages` WHERE `type`='news' AND `moved` IS NULL ORDER BY `date` DESC");
-                $this->ReturnResponse();
-                break;
-            }
-            case "getblogs" : {
-                //print menu items
-                $this->response->ok=true;
-                $this->response->data=$this->Query("SELECT * FROM `web_pages` WHERE `type`='blog' AND `moved` IS NULL ORDER BY `date` DESC");
-                $this->ReturnResponse();
-                break;
-            }            
+            }                        
             default : {
                 $this->response->error="UNKNOWN PAGE";
                 $this->response->debug="POST::".implode("!!!",$_POST)."!!!GET::".implode("!!!",$_GET);
