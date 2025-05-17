@@ -92,6 +92,7 @@ switch ($this->GetVar("section")) {
 
                 // THIS IS DONE CORRECTLY AND WE HAVE TO SAVE EVERYTING TO DATABASE!
                 if ($_POST["id"] == "0") {
+                    $id=$this->GetNextID("web_pages");
                     $result=$this->Query("INSERT INTO `web_pages` (`creator`,`type`,`url`,`title`,`content`,`date`,`author`,`comments`,`custom`,`parameters`,`source`) VALUES
                         (?,?,?,?,?,?,?,?,?,?,?);", [ $this->user["id"],$_POST["type"], $url, $title, $content, $_POST["date"], $author, $comments, $custom, $parameters, $source]);
                     if($result){
@@ -100,11 +101,18 @@ switch ($this->GetVar("section")) {
                         $tags["[{MESSAGE}]"] .= "<br>".$lang[$this->config["lang"]]["content_not_added"]."<br><br>";
                     }  
                     // add page to menu!
-                    $this->Query("INSERT INTO `web_menu` (`type`,`text`,`title`,`url`,`priority`) VALUES (?,?,?,?,?);", [
-                        $_POST["type"], $title, $title, $url, 300]);
+                    if($_POST["type"] == "page"){
+                        $this->Query("INSERT INTO `web_menu` (`type`,`text`,`title`,`url`,`priority`,`page_id`) VALUES (?,?,?,?,?,?);", [
+                            "main", $title, $title, $url, 300, $id]);
+                    }
                 } else {
                     $tags["[{MESSAGE}]"] .= "UPDATE CONTENT PAGE ID " . $_POST["id"] . "<br>";
-                    $result=$this->Query(
+                    if($_POST["id"] == "1"){ $url = "/";  }
+                    if ($_POST["type"] == "page") {
+                        $result=$this->Query("UPDATE `web_menu` SET `url`=?, `title`=?, `text`=? WHERE `page_id`=? limit 1", [$url, $title, $title, $_POST["id"]]);
+                    }    
+
+                        $result=$this->Query(
                         "UPDATE `web_pages` SET `creator`=?,`type`=?,`url`=?,`title`=?,`content`=?,`date`=?,`author`=?,`comments`=?,`custom`=?,`parameters`=?,`source`=? WHERE `id`=?",
                         [$this->user["id"],$_POST["type"], $url, $title, $content, $_POST["date"], $author, $comments, $custom, $parameters, $source, $_POST["id"]]
                     );

@@ -376,9 +376,9 @@ $this->config=array(
                             ('user', 'CONTENT', 'WEB CONTENT ADMINISTRATION', '/admin.php?page=content&section=main', 400, 0),
                             ('user', 'MY-PROFILE', 'CHANGE MY INFO PROFILE', '/admin.php?page=profile&section=main', 600, 0),
                             ('user', 'LOG-OUT', 'LOG-OUT OF ADMIN SYSTEM', '/admin.php?logout=true', 700, 0),
-                            ('main', 'HOME', 'Home Page', '/', 100, 0),
-                            ('main', 'CONTACT', 'Contact Us', '/contacts.html', 100, 0),
-                            ('main', 'SITEMAP', 'Sitemap', '/sitemap.html', 100, 0)",
+                            ('main', 'HOME', 'Home Page', '/', 100, 1),
+                            ('main', 'CONTACT', 'Contact Us', '/contacts.html', 100, 2),
+                            ('main', 'SITEMAP', 'Sitemap', '/sitemap.html', 100, 3)",
                             []
                         );
                     } else {
@@ -394,9 +394,9 @@ $this->config=array(
                             ('user', 'Страници', 'Админ страници', '/admin.php?page=content&section=main', 200, 0),
                             ('user', 'Моят Профил', 'Промяна на моят профил', '/admin.php?page=profile&section=main', 300, 0),
                             ('user', 'ИЗХОД', 'Излизане от Системата!', '/admin.php?logout=true', 400, 0),
-                            ('main', 'Начало', 'Към Главната Страница!', '/', 100, 0),
-                            ('main', 'За Контакт', 'Свържете се с нас сега!', '/contacts.html', 100, 0),                      
-                            ('main', 'Карта на сайта', 'Карта на сайта', '/sitemap.html', 100, 0)",
+                            ('main', 'Начало', 'Към Главната Страница!', '/', 100, 1),
+                            ('main', 'За Контакт', 'Свържете се с нас сега!', '/contacts.html', 100, 2),                      
+                            ('main', 'Карта на сайта', 'Карта на сайта', '/sitemap.html', 100, 3)",
                             []
                         );
                     }    
@@ -421,33 +421,39 @@ $this->config=array(
                         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;",
                         []
                     );					
+                    
+                    $tailwind_start= '<div class="container mx-auto px-4 sm:px-6 lg:px-8"><h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-none text-gray-900">';
+                    $tailwind_end= '</h1></div>';
 
                     $pages = [];
                     $pages["/"]=[
+                        1,
                         "/",
                         $language=="en" ? "Home Page" : "Начална страница",
-                        $language=="en" ? "<h1>Home Page</h1><p>This is the home page of the website.</p>" : "<h1>Начална страница</h1><p>Това е началната страница на сайта.</p>",
+                        $language=="en" ? $tailwind_start."Home Page</h1><p>This is the home page of the website.</p>".$tailwind_end : $tailwind_start."начална страница</h1><p>Това е началната страница на сайта.</p>".$tailwind_end,
                         "Auto Generated"
                     ];
 
                     $pages["contacts.html"]=[
+                        2,
                         "/contacts.html",
                         $language=="en" ? "Contact Us" : "Свържете се с нас",
-                        $language=="en" ? "<h1>Contact Us</h1>\r\n<ul><li>Name: </li><li>Phone: </li><li>Email: </li></ul>" : "<h1>Свържете се с нас</h1>\r\n<ul><li>Име: </li><li>Телефон: </li><li>Имейл: </li></ul>",
+                        $language=="en" ? $tailwind_start."Contact Us</h1>\r\n<ul><li>Name: </li><li>Phone: </li><li>Email: </li></ul>".$tailwind_end : $tailwind_start."Свържете се с нас</h1>\r\n<ul><li>Име: </li><li>Телефон: </li><li>Имейл: </li></ul>".$tailwind_end,
                         "Auto Generated"
                     ];
 
                     $pages["sitemap.html"]=[
+                        3,
                         "/sitemap.html",
                         $language=="en" ? "Website Sitemap" : "Карта на сайта",
-                        $language=="en" ? "<h1>Sitemap</h1><p>This is the sitemap of the website.</p>" : "<h1>Карта на сайта</h1><p>Това е карта на сайта.</p>",
+                        $language=="en" ? $tailwind_start."Sitemap</h1><p>This is the sitemap of the website.</p>".$tailwind_end : $tailwind_start."Карта на сайта</h1><p>Това е карта на сайта.</p>".$tailwind_end,
                         "Auto Generated"
                     ];
 
-                    $sql->execute_query("INSERT INTO `web_pages` (`creator`,`type`,`url`,`title`,`content`,`author`) VALUES
-                    (1,'page',?,?,?,?),
-                    (1,'page',?,?,?,?),
-                    (1,'page',?,?,?,?)",array_merge($pages["/"],$pages["contacts.html"],$pages["sitemap.html"]));
+                    $sql->execute_query("INSERT INTO `web_pages` (`id`,`creator`,`type`,`url`,`title`,`content`,`author`) VALUES
+                    (?,1,'page',?,?,?,?),
+                    (?,1,'page',?,?,?,?),
+                    (?,1,'page',?,?,?,?)",array_merge($pages["/"],$pages["contacts.html"],$pages["sitemap.html"]));
             				
                     $sql->execute_query("CREATE TABLE `web_comments` (
                         `id` int NOT NULL AUTO_INCREMENT,
