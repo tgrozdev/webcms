@@ -282,14 +282,13 @@ $this->config=array(
                     } else {
                         $live="https://".$_SERVER["HTTP_HOST"]."/api.php";
                     }
-                    // edit rect file and change the url
-                    $files=scandir(getcwd()."/_next/static/chunks/app/",1);
-                    foreach ($files as $key => $file){
-                        if(($file!=".") && ($file!="..") && ($file!="index.html") && is_file(getcwd()."/_next/static/chunks/app/".$file))
-                            $filename=getcwd()."/_next/static/chunks/app/".$file;
-                            $rect = file_get_contents($filename);
-                            $rect = str_replace("http://localhost/api.php", $live, $rect);
-                            file_put_contents($filename, $rect);
+                    // edit rect file and change the url based on the dynamically generated name!
+                    $file="page-af86e9bd3be5a444.js";
+                    if(is_file(getcwd()."/_next/static/chunks/app/".$file))
+                        $filename=getcwd()."/_next/static/chunks/app/".$file;
+                        $rect = file_get_contents($filename);
+                        $rect = str_replace("http://localhost/api.php", $live, $rect);
+                        file_put_contents($filename, $rect);
                     }
 
                     // drop all tables
